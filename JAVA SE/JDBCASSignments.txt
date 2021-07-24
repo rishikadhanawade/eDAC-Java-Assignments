@@ -1,0 +1,175 @@
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+//1) create a table "Student"
+//
+//	rollno,name,age
+//
+//write a java program to accept rollno,name,age from user and insert a row.
+//
+//after inserting that row try to view using a query.
+public class JDBCAss1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		String ss="jdbc:mysql://localhost:3306/javaeeday1?autoReconnect=true&useSSL=false";
+		try(Connection con=DriverManager.getConnection(ss,"root","123456"))
+		{
+			Statement st=con.createStatement();
+			st.executeUpdate("insert into Student values(1,'Raj',13);");
+			
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+}
+
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Scanner;
+
+//2) create table "Employee"
+//	empid,empname,desig
+//
+//	add 5 records manually.
+//
+//   Now write a java program to accept "designation" from user and retrieve employees with the given designation.
+public class JDBCAss2 {
+
+	public static void main(String[] args) {
+		String ss="jdbc:mysql://localhost:3306/javaeeday1?autoReconnect=true&useSSL=false";
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter a designation");
+		String designation=sc.nextLine();
+		try(Connection con=DriverManager.getConnection(ss,"root","123456"))
+		{
+			PreparedStatement pst=con.prepareStatement("select * from Employee where desig=?");
+			pst.setString(1,designation);
+			ResultSet rs=pst.executeQuery();
+			while(rs.next())
+			{
+				System.out.println(rs.getInt(1)+" "+rs.getString(2)+" "+rs.getString(3));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+
+}
+
+3]
+/*
+3) Object Persistence inside database
+
+create a table "Product" with
+	pid number
+	qty number
+	cost decimal
+	pname varchar
+[ do not add any record ]
+
+define a class "Product" with
+	private int pid,qty;
+	private double cost;
+	private String pname;
+		setters,getters,parameterized constructor and toString()
+
+create 1 instance of above class , display it and then insert a row inside Product with the help of above instance.
+
+	now assign "null" to the above instance. That means your heap based object will be soon garbage collected , but you need not worry as you have saved the state of an object inside the database.
+
+	now fire a query to read that record and with the help of it initialize new object of "Product" and display it.
+
+*/
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+class Product
+{
+	private int pid,qty;
+	private double cost;
+	private String pname;
+	public double getCost() {
+		return cost;
+	}
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+	public int getQty() {
+		return qty;
+	}
+	public Product(int pid, int qty, double cost, String pname) {
+		this.pid = pid;
+		this.qty = qty;
+		this.cost = cost;
+		this.pname = pname;
+	}
+	@Override
+	public String toString() {
+		return "Product [pid=" + pid + ", qty=" + qty + ", cost=" + cost + ", pname=" + pname + "]";
+	}
+	public void setQty(int qty) {
+		this.qty = qty;
+	}
+	public int getPid() {
+		return pid;
+	}
+	public void setPid(int pid) {
+		this.pid = pid;
+	}
+	public String getPname() {
+		return pname;
+	}
+	public void setPname(String pname) {
+		this.pname = pname;
+	}
+}
+
+public class JDBCAss3 {
+	public static void main(String[] args) 
+	{
+		Product p1=new Product(1,5,12000,"POCO X3");
+		System.out.println(p1);
+		String ss="jdbc:mysql://localhost:3306/javaeeday1?autoReconnect=true&useSSL=false";
+		try(Connection con=DriverManager.getConnection(ss,"root","123456"))
+		{
+			PreparedStatement pst=con.prepareStatement("insert into product values(?,?,?,?)");
+			pst.setInt(1,p1.getPid());
+			pst.setInt(2,p1.getQty());
+			pst.setDouble(3,p1.getCost());
+			pst.setString(4, p1.getPname());
+			pst.executeUpdate();
+			p1=null;
+			pst=con.prepareStatement("select * from product");
+			ResultSet rs=pst.executeQuery();
+			rs.next();
+			Product p2=new Product(rs.getInt(1),rs.getInt(2),rs.getDouble(3),rs.getString(4));
+			System.out.println(p2);
+		} 
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+
+	
+		
+	}
+
+}

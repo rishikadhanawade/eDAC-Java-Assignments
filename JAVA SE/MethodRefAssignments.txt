@@ -1,0 +1,223 @@
+//1) define a functional interface "First" with an abstract method "void disp1()".
+//define a class "Second" with a method "void fun1()"
+//inside main function create a method reference for "First" and invoke "fun1" of "Second"
+interface First
+{
+	void disp();
+}
+class Second
+{
+	void fun1()
+	{
+		System.out.println("In fun1() of 2");
+	}
+}
+public class Question1 {
+
+	public static void main(String[] args) {
+		
+		Second s2=new Second();
+		First ref=s2::fun1;
+		ref.disp();
+
+	}
+
+}
+
+
+//2) define a functional interface "Third" with an abstract method "void show(int num)".
+//define a class "Sample" with a method "void disp(int num)"
+// inside main function create a method reference for "Third" and invoke "disp" of "Sample" by passing a value "500".
+
+interface Third
+{
+	void show(int num);
+}
+class Sample
+{
+	void disp(int num)
+	{
+		System.out.println("Number is "+num);
+	}
+}
+public class Question2 {
+
+	public static void main(String[] args) {
+		
+		Sample s1=new Sample();
+		Third ref1=s1::disp;
+		ref1.show(500);
+		
+		
+	}
+
+}
+//
+//3) define a functional interface "Fifth" with an abstract method "int add(int a,int b)"
+//define a class Math1 with a method "int calc(int a,int b)" 
+//
+//inside main function invoke "calc" method with the help of
+//	a) lamdba expression
+//	b) method reference
+
+interface Fifth
+{
+	int add(int a,int b);
+}
+class Math1
+{
+	int calc(int a,int b)
+	{
+		return a+b;
+	}
+}
+public class Question3 {
+
+	public static void main(String[] args) {
+
+		Math1 m1=new Math1();
+		Fifth f1=(a,b)->{ return m1.calc(a, b);};
+		System.out.println(f1.add(2,3));
+		Fifth f2=m1::calc;
+		System.out.println(	f2.add(5, 3));
+		
+		
+	}
+
+}
+
+
+//
+//4) define a functional interface "Sixth" with an abstract method "void disp5()".
+//define a class "Sample" with a static method "void fun1()"
+//
+//inside main function create a method reference for "Sixth" and invoke "fun1" of "Sample"
+interface Sixth
+{
+	void disp5();
+}
+class Sample1
+{
+	static void fun1()
+	{
+		System.out.println("In fun1() of Sample");
+	}
+}
+public class Question4 {
+
+	public static void main(String[] args) {
+		
+		Sixth s1=Sample1::fun1;
+		s1.disp5();
+	}
+
+}
+
+//5) define a functional interface "Emp" with an abstract method "void show()".
+//define a class "MyClass" with default constructor with the message "inside default constructor of MyClass".
+//inside main function instantiate "MyClass" using method reference to "Emp"
+interface Emp
+{
+	void show();
+}
+class MyClass
+{
+
+	public MyClass() {
+		
+		System.out.println("inside default constructor of MyClass");
+	}
+	
+}
+public class Question5 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		
+		Emp ref=MyClass::new;
+		ref.show();
+	}
+
+}
+//6) define a functional interface "Seventh" with an abstract method "void fun(int k)".
+//define a class "Sample" with parameterized constructor with the message "inside parameterized constructor of 
+//Sample\t"+k .inside main function instantiate "Sample" by passing value "200" using method reference to "Seventh"
+interface Seventh
+{
+	void fun(int k);
+}
+class Sample2
+{
+	int k;
+
+	public Sample2(int k) {
+		this.k = k;
+		System.out.println("inside parameterized constructor of Sample\t"+k);
+	}
+	
+	
+}
+public class Question6 {
+
+	public static void main(String[] args) {
+
+		Seventh ref=Sample2::new;
+		ref.fun(200);
+	}
+
+}
+//7) define a class "Student" with name and age as member variables, parameterized constructor , setters , 
+//getters and "toString" method. 
+//define a functional interface "MyInterface" with an abstract method "void show(Student ref)"
+//inside main function 
+//a) create an instance of "Student" class by passing "Vijay" and '20' values.
+//
+//b) create method reference for "MyInterface" and display the instance of "Student" class created above.
+interface MyInterface
+{
+	void show(Student ref);
+}
+class Student
+{
+	String name;
+	void display(Student ref)
+	{
+		System.out.println(this);
+	}
+	public Student(String name, int age) {
+		super();
+		this.name = name;
+		this.age = age;
+	}
+	int age;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+	@Override
+	public String toString() {
+		return "Student [name=" + name + ", age=" + age + "]";
+	}
+	
+	
+}
+public class Question7 {
+	
+	public static void main(String args[])
+	{
+		Student s1=new Student("Vijay",20);
+		System.out.println(s1);
+		MyInterface m1=s1::display;
+		m1.show(s1);
+		
+		
+	}
+}

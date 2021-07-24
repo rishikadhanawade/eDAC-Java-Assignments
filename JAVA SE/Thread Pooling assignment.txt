@@ -1,0 +1,291 @@
+//1) create a multi-threaded application by using Thread pool.create 2 threads. each thread should display 
+//characters from A to J. [ make sure while one thread executes ,
+// other thread should not interfere ]
+
+import java.util.concurrent.*;
+class MyApp implements Runnable
+{
+	synchronized public void run()
+	{
+		for(char ch='A';ch<='J';ch++)
+		{
+			System.out.println(ch+"\t"+Thread.currentThread());
+		}
+	}
+}
+public class Assignment1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ExecutorService exec=Executors.newFixedThreadPool(2);
+
+		MyApp m=new MyApp();
+		for(int i=0;i<3;i++)
+		{
+			exec.execute(m);
+		}
+		System.out.println("After submitting tasks");
+
+
+		exec.shutdown();
+
+	}
+
+}
+
+o/P:
+After submitting tasks
+A	Thread[pool-1-thread-1,5,main]
+B	Thread[pool-1-thread-1,5,main]
+C	Thread[pool-1-thread-1,5,main]
+D	Thread[pool-1-thread-1,5,main]
+E	Thread[pool-1-thread-1,5,main]
+F	Thread[pool-1-thread-1,5,main]
+G	Thread[pool-1-thread-1,5,main]
+H	Thread[pool-1-thread-1,5,main]
+I	Thread[pool-1-thread-1,5,main]
+J	Thread[pool-1-thread-1,5,main]
+A	Thread[pool-1-thread-2,5,main]
+B	Thread[pool-1-thread-2,5,main]
+C	Thread[pool-1-thread-2,5,main]
+D	Thread[pool-1-thread-2,5,main]
+E	Thread[pool-1-thread-2,5,main]
+F	Thread[pool-1-thread-2,5,main]
+G	Thread[pool-1-thread-2,5,main]
+H	Thread[pool-1-thread-2,5,main]
+I	Thread[pool-1-thread-2,5,main]
+J	Thread[pool-1-thread-2,5,main]
+A	Thread[pool-1-thread-1,5,main]
+B	Thread[pool-1-thread-1,5,main]
+C	Thread[pool-1-thread-1,5,main]
+D	Thread[pool-1-thread-1,5,main]
+E	Thread[pool-1-thread-1,5,main]
+F	Thread[pool-1-thread-1,5,main]
+G	Thread[pool-1-thread-1,5,main]
+H	Thread[pool-1-thread-1,5,main]
+I	Thread[pool-1-thread-1,5,main]
+J	Thread[pool-1-thread-1,5,main]
+
+
+
+//2) create a multi-threaded application by using Thread pool.create 2 threads. each thread should display
+//numbers from 1 to 10. [ make sure while one thread executes , other thread should not interfere]Also when
+//first thread displays nos. from 1 to 5 it should released the lock and allow other thread to display nos.
+//from 1 to 5 and then previous thread will display nos. from 6 to 10 and so on.
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+class MyApp1 implements Runnable
+{
+	synchronized public void run()
+	{
+		for(int ch=1;ch<11;ch++)
+		{
+			if(ch==6)
+			{
+				try
+				{
+					wait();
+				}
+				catch(InterruptedException ie)
+				{
+					
+				}
+			}
+			System.out.println(ch+"\t"+Thread.currentThread());
+			notifyAll();
+		}
+	}
+}
+public class Assignment2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ExecutorService exec=Executors.newFixedThreadPool(2);
+
+		MyApp1 m=new MyApp1();
+		for(int i=0;i<2;i++)
+		{
+			exec.execute(m);
+		}
+		System.out.println("After submitting tasks");
+		exec.shutdown();
+
+	}
+
+}
+
+O/P:
+After submitting tasks
+1	Thread[pool-1-thread-1,5,main]
+2	Thread[pool-1-thread-1,5,main]
+3	Thread[pool-1-thread-1,5,main]
+4	Thread[pool-1-thread-1,5,main]
+5	Thread[pool-1-thread-1,5,main]
+1	Thread[pool-1-thread-2,5,main]
+2	Thread[pool-1-thread-2,5,main]
+3	Thread[pool-1-thread-2,5,main]
+4	Thread[pool-1-thread-2,5,main]
+5	Thread[pool-1-thread-2,5,main]
+6	Thread[pool-1-thread-1,5,main]
+7	Thread[pool-1-thread-1,5,main]
+8	Thread[pool-1-thread-1,5,main]
+9	Thread[pool-1-thread-1,5,main]
+10	Thread[pool-1-thread-1,5,main]
+6	Thread[pool-1-thread-2,5,main]
+7	Thread[pool-1-thread-2,5,main]
+8	Thread[pool-1-thread-2,5,main]
+9	Thread[pool-1-thread-2,5,main]
+10	Thread[pool-1-thread-2,5,main]
+
+
+//3) create a multi-threaded application by using Thread pool and ReentrantLock (explicit locking) .
+//create 2 threads. each thread should display characters from A to J. [ make sure while one thread executes
+//other thread should not interfere ]
+
+import java.util.concurrent.*;
+import java.util.concurrent.locks.ReentrantLock;
+class MyApp2 implements Runnable
+{
+	ReentrantLock mylock=new ReentrantLock();
+	public void run()
+	{
+		mylock.lock();
+		for(char ch='A';ch<='J';ch++)
+		{
+			System.out.println(ch+"\t"+Thread.currentThread());
+		}
+		mylock.unlock();
+	}
+}
+public class Assignment3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		ExecutorService exec=Executors.newFixedThreadPool(2);
+
+		MyApp2 m=new MyApp2();
+		for(int i=0;i<3;i++)
+		{
+			exec.execute(m);
+		}
+		System.out.println("After submitting tasks");
+
+
+		exec.shutdown();
+
+	}
+
+}
+
+O/P:
+After submitting tasks
+A	Thread[pool-1-thread-1,5,main]
+B	Thread[pool-1-thread-1,5,main]
+C	Thread[pool-1-thread-1,5,main]
+D	Thread[pool-1-thread-1,5,main]
+E	Thread[pool-1-thread-1,5,main]
+F	Thread[pool-1-thread-1,5,main]
+G	Thread[pool-1-thread-1,5,main]
+H	Thread[pool-1-thread-1,5,main]
+I	Thread[pool-1-thread-1,5,main]
+J	Thread[pool-1-thread-1,5,main]
+A	Thread[pool-1-thread-1,5,main]
+B	Thread[pool-1-thread-1,5,main]
+C	Thread[pool-1-thread-1,5,main]
+D	Thread[pool-1-thread-1,5,main]
+E	Thread[pool-1-thread-1,5,main]
+F	Thread[pool-1-thread-1,5,main]
+G	Thread[pool-1-thread-1,5,main]
+H	Thread[pool-1-thread-1,5,main]
+I	Thread[pool-1-thread-1,5,main]
+J	Thread[pool-1-thread-1,5,main]
+A	Thread[pool-1-thread-2,5,main]
+B	Thread[pool-1-thread-2,5,main]
+C	Thread[pool-1-thread-2,5,main]
+D	Thread[pool-1-thread-2,5,main]
+E	Thread[pool-1-thread-2,5,main]
+F	Thread[pool-1-thread-2,5,main]
+G	Thread[pool-1-thread-2,5,main]
+H	Thread[pool-1-thread-2,5,main]
+I	Thread[pool-1-thread-2,5,main]
+J	Thread[pool-1-thread-2,5,main]
+
+
+
+//4) create a multi-threaded application by using Thread pool and ReentrantLock.create 2 threads. each thread 
+//should display numbers from 1 to 10. [ make sure while one thread executes ,other thread should not interfere]
+//Also when first thread displays nos. from 1 to 5 it should released the lock and allow other thread to display 
+//nos. from 1 to 5 and then previous thread will display nos. from 6 to 10 and so on.
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.ReentrantLock;
+class MyApp3 implements Runnable
+{
+	ReentrantLock myLock=new ReentrantLock();
+	Condition value=myLock.newCondition();
+	public void run()
+	{
+		myLock.lock();
+		for(int ch=1;ch<11;ch++)
+		{
+			if(ch==6)
+			{
+				try
+				{
+					value.await();
+				}
+				catch(InterruptedException ie)
+				{
+					
+				}
+			}
+			System.out.println(ch+"\t"+Thread.currentThread());
+			value.signalAll();
+			
+		}
+	}
+}
+public class Assignment4 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		ExecutorService exec=Executors.newFixedThreadPool(2);
+
+		MyApp3 m=new MyApp3();
+		for(int i=0;i<2;i++)
+		{
+			exec.execute(m);
+		}
+		System.out.println("After submitting tasks");
+		exec.shutdown();
+
+	}
+
+}
+
+O/P:
+After submitting tasks
+1	Thread[pool-1-thread-1,5,main]
+2	Thread[pool-1-thread-1,5,main]
+3	Thread[pool-1-thread-1,5,main]
+4	Thread[pool-1-thread-1,5,main]
+5	Thread[pool-1-thread-1,5,main]
+1	Thread[pool-1-thread-2,5,main]
+2	Thread[pool-1-thread-2,5,main]
+3	Thread[pool-1-thread-2,5,main]
+4	Thread[pool-1-thread-2,5,main]
+5	Thread[pool-1-thread-2,5,main]
+6	Thread[pool-1-thread-1,5,main]
+7	Thread[pool-1-thread-1,5,main]
+8	Thread[pool-1-thread-1,5,main]
+9	Thread[pool-1-thread-1,5,main]
+10	Thread[pool-1-thread-1,5,main]
+
+
+
+
+

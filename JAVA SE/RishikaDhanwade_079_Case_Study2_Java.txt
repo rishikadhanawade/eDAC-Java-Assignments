@@ -1,0 +1,103 @@
+Developer
+
+Student.java
+
+
+/**
+ * 
+ */
+package studpack;
+
+/**
+ * @author Rishika_D
+ *
+ */
+public class Student {
+	private String name;
+	private String address;
+	private int age;
+	/**
+	 * @return the name passed by the setter
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name set the name for the initialization of instance member
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the address passed by the setter
+	 */
+	public String getAddress() {
+		return address;
+	}
+	/**
+	 * @param address set the address for the initialization of instance member
+	 */
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	/**
+	 * @return the age passed by the setter
+	 */
+	public int getAge() {
+		return age;
+	}
+	/**
+	 * @param age set the age for the initialization of instance member
+	 */
+	public void setAge(int age) {
+		this.age = age;
+	}
+	/**
+	 * @param name
+	 * @param address
+	 * @param age
+	 */
+	public Student(String name, String address, int age) {
+		super();
+		this.name = name;
+		this.address = address;
+		this.age = age;
+	}
+	/**
+	 * 
+	 */
+	public Student() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+
+}
+
+
+Client
+
+import studpack.Student;
+
+public class MyApp2 {
+
+	public static void main(String[] args) {
+		
+		Student s1=new Student();
+		s1.setName("Rishika");
+		System.out.println("Name of Student: "+s1.getName());
+		s1.setAddress("Mumbai");
+		System.out.println("Address is "+s1.getAddress());
+		s1.setAge(23);
+		System.out.println("Age: "+s1.getAge());
+		
+
+	}
+
+}
+
+O/P:
+Name of Student: Rishika
+Address is Mumbai
+Age: 23
+

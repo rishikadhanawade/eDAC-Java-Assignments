@@ -1,0 +1,557 @@
+########################
+Rishika Dhanawade
+079
+OOPS
+Java
+Collection API Assignment
+########################
+
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ListIterator;
+import java.util.Scanner;
+
+//1) accept 10 numbers from user and add them inside the ArrayList.
+//using ListIterator display all the numbers bidirectionally.
+public class Question1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		List<Integer> list1=new ArrayList<Integer>();
+		System.out.println("Enter elements in a ArrayList");
+		for(int i=0;i<10;i++)
+		{
+			list1.add(sc.nextInt());
+		}
+		ListIterator<Integer> ltr=list1.listIterator();
+		System.out.println("Elements from start to end");
+		while(ltr.hasNext())
+		{
+			System.out.println(ltr.next());
+		}
+		System.out.println("Elements from end to start");
+		while(ltr.hasPrevious())
+		{
+			System.out.println(ltr.previous());
+		}
+
+	}
+
+}
+Enter elements in a ArrayList
+1
+2
+3
+4
+5
+6
+4
+5
+7
+8
+Elements from start to end
+1
+2
+3
+4
+5
+6
+4
+5
+7
+8
+Elements from end to start
+8
+7
+5
+4
+6
+5
+4
+3
+2
+1
+
+import java.util.LinkedList;
+import java.util.List;
+
+//
+//2) create LinkedList with the values 10,20,30 and 40.
+//display it.
+//now insert 500 in the beginning.
+//	insert 400 at 2nd position.
+//	add 1000 at the end.
+//display the list again.
+public class Question2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		List<Integer> list2=new LinkedList<Integer>();
+		list2.add(10);
+		list2.add(20);
+		list2.add(30);
+		list2.add(40);
+		System.out.println("Original contents of list2  "+list2);
+		((LinkedList)list2).addFirst("500");
+		list2.add(1,400);
+		((LinkedList)list2).addLast("1000");
+		System.out.println("Changed contents of list2  "+list2);
+		
+
+	}
+
+}
+
+Original contents of list2  [10, 20, 30, 40]
+Changed contents of list2  [500, 400, 10, 20, 30, 40, 1000]
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+
+
+//3) add 5 numbers inside CopyOnWriteArrayList and show how can you add one more number at the same time of traversal 
+//through its iterator.
+public class Question3 {
+
+	public static void main(String[] args) 
+	{
+		List<Integer> list3=new CopyOnWriteArrayList<Integer>();
+		list3.add(10);
+		list3.add(20);
+		list3.add(30);
+		list3.add(40);
+		list3.add(50);
+		Iterator<Integer> itr=list3.iterator();
+		int k=0;
+		System.out.println("Contents before traversing and change");
+		while(itr.hasNext())
+		{
+			System.out.println(itr.next());
+			list3.add(60);
+		}
+		System.out.println("New Contents After Change");
+		Iterator<Integer> itr1=list3.iterator();
+		while(itr1.hasNext())
+		{
+			System.out.println(itr1.next());
+		}
+		
+
+	}
+
+}
+Contents before traversing and change
+10
+20
+30
+40
+50
+New Contents After Change
+10
+20
+30
+40
+50
+60
+60
+60
+60
+60
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+//4) create a class "MyClass".
+//create 5 different objects of it.
+//add them in a ArrayList.
+//store ArrayList in file.
+//Now open a file, read ArrayList and display all objects.
+
+class MyClass implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	int id;
+	String name;
+	public MyClass(int id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+	@Override
+	public String toString() {
+		return "MyClass [id=" + id + ", name=" + name + "]";
+	}
+	
+}
+public class Question4 {
+
+	public static void main(String[] args) {
+	
+		MyClass m1=new MyClass(1,"Anuj");
+		MyClass m2=new MyClass(2,"Aman");
+		MyClass m3=new MyClass(3,"Rishika");
+		MyClass m4=new MyClass(4,"Akhilesh");
+		MyClass m5=new MyClass(5,"Amar");
+		List<MyClass> list4=new ArrayList<MyClass>();
+		list4.add(m1);
+		list4.add(m2);
+		list4.add(m3);
+		list4.add(m4);
+		list4.add(m5);
+		FileOutputStream  fos=null;
+		try {
+			fos=new FileOutputStream("D:\\filehandling\\CollecTionApi.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObjectOutputStream oos=null;
+		try {
+			oos=new ObjectOutputStream(fos);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oos.writeObject(list4);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		try {
+			fis=new FileInputStream("D:\\filehandling\\CollecTionApi.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ois=new ObjectInputStream(fis);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<?>ref=null;
+		try {
+			ref=(List<?>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ois.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Iterator<?> itr=ref.iterator();
+		while(itr.hasNext())
+		{
+			System.out.println(itr.next());
+		}
+	}
+		
+		
+		
+		
+
+	}
+
+MyClass [id=1, name=Anuj]
+MyClass [id=2, name=Aman]
+MyClass [id=3, name=Rishika]
+MyClass [id=4, name=Akhilesh]
+MyClass [id=5, name=Amar]
+
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Scanner;
+import java.util.Set;
+
+//5) create a HashMap.
+//store  prn no. and students name of 10 students inside the HashMap.
+//display it using iterator.
+public class Question5 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		Map<Integer,String> m1=new HashMap<Integer,String>();
+		System.out.println("Enter the PRN and names of Students");
+		m1.put(1, "A");
+		m1.put(2, "B");
+		m1.put(3, "C");
+		m1.put(4, "D");
+		m1.put(5, "E");
+		m1.put(6, "F");
+		m1.put(7, "G");
+		m1.put(8, "H");
+		m1.put(9, "I");
+		m1.put(10, "J");
+		Set<Entry<Integer,String>> set=m1.entrySet(); //in hashmap
+		// get an iterator
+		Iterator<Entry<Integer, String>> i=set.iterator(); //in hashmap
+		// display elements
+		while(i.hasNext())
+		{
+			Map.Entry<Integer,String> me=(Entry<Integer,String>)i.next(); //in hashmap
+			System.out.print(me.getKey()+ ":");
+			System.out.println(me.getValue());
+		}
+	}
+
+}
+Enter the PRN and names of Students
+1:A
+2:B
+3:C
+4:D
+5:E
+6:F
+7:G
+8:H
+9:I
+10:J
+
+//6) create a hierarchy as follows
+//	interface Game- play() method
+//	Derive at least 3 classes from it. ( Cricket, Chess and Football )
+//Now Create generic class which can take Game type (i.e. any sub type of Game) as parameter.
+//In this class try to call the play() method of the class which is passed to it.
+interface Game
+{
+	void play();
+}
+class Cricket implements Game
+{
+	public void play()
+	{
+		System.out.println("Play Cricket");
+	}
+}
+class Chess implements Game
+{
+	public void play()
+	{
+		System.out.println("Play Chess");
+	}
+}
+class Football implements Game
+{
+	public void play()
+	{
+		System.out.println("Play Football");
+	}
+}
+class common<T extends Game>
+{
+	T ob;
+
+	public common(T ob) {
+		this.ob = ob;
+	}
+	public void fun()
+	{
+		ob.play();
+	}
+	
+}
+public class Question6 {
+
+	public static void main(String[] args) {
+
+		common<Cricket> c1=new common<Cricket>(new Cricket());
+		c1.fun();
+		common<Football> c2=new common<Football>(new Football());
+		c2.fun();
+	}
+
+}
+
+Play Cricket
+Play Football
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
+//7) Define a class "Employee" with following members
+//empid, empname, desig, basic.
+//Define a parameterised constructor which will take all these values while creating an instance.
+//Also define "disp()" method which will display all these details.
+//create 4 employees and save them in "ArrayList".  
+//Now save this "ArrayList" in a file.
+//Open file , read "ArrayList" , traverse ArrayList and call "disp()" for all the objects.
+class Employee implements Serializable
+{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	int empid;
+	String empname;
+	String desig;
+	String address;
+	public Employee(int empid, String empname, String desig, String address) {
+		this.empid = empid;
+		this.empname = empname;
+		this.desig = desig;
+		this.address = address;
+	}
+	public void display()
+	{
+		System.out.println(this.empid+"\t"+this.empname+"\t"+this.desig+"\t"+this.address);
+	}
+}
+public class Question7 {
+
+	public static void main(String[] args) {
+
+		Employee e1=new Employee(1,"A","Devloper","Mumbai");
+		Employee e2=new Employee(2,"B","SDE","Delhi");
+		Employee e3=new Employee(3,"C","QAE","Pune");
+		Employee e4=new Employee(4,"D","Tester","Banglore");
+		List<Employee> emp=new ArrayList<Employee>();
+		emp.add(e1);
+		emp.add(e2);
+		emp.add(e3);
+		emp.add(e4);
+		FileOutputStream  fos=null;
+		try {
+			fos=new FileOutputStream("D:\\filehandling\\CollecTionApi2.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ObjectOutputStream oos=null;
+		try {
+			oos=new ObjectOutputStream(fos);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oos.writeObject(emp);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			oos.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		FileInputStream fis=null;
+		ObjectInputStream ois=null;
+		try {
+			fis=new FileInputStream("D:\\filehandling\\CollecTionApi2.txt");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ois=new ObjectInputStream(fis);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<?>ref=null;
+		try {
+			ref=(List<?>)ois.readObject();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			ois.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Iterator<?> itr=ref.iterator();
+		while(itr.hasNext())
+		{
+			((Employee) itr.next()).display();
+		}
+		
+	}
+
+}
+
+1	A	Devloper	Mumbai
+2	B	SDE	Delhi
+3	C	QAE	Pune
+4	D	Tester	Banglore
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+//
+//8) maintain ICC ranking of at least 5 batsmen in the "HashMap".
+//list should be maintain as "rank" "name"
+//e.g. "1" "Rohit Sharma".
+//Now ask any rank bet'n 1 to 5 from user. ( user input).
+//if user asks for a particular rank , retrieve batsman name for that rank from the HashMap.
+
+public class Question8 {
+
+	public static void main(String[] args) {
+
+		Scanner sc=new Scanner(System.in);
+		Map<Integer,String> m2=new HashMap<Integer,String>();
+		m2.put(1, "Rohit S");
+		m2.put(2, "Sachin T");
+		m2.put(3, "MS Dhoni");
+		m2.put(4, "Virat K");
+		m2.put(5, "Shikhar D");
+		System.out.println("Input a Rank between 1 and 5");
+		int n=sc.nextInt();
+		String player=m2.get(n);
+		System.out.println("Player Name is:"+player);
+		
+	}
+
+}
+
+
+Input a Rank between 1 and 5
+5
+Player Name is:Shikhar D

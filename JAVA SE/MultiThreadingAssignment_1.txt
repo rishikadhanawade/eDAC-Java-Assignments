@@ -1,0 +1,108 @@
+#########################
+Author: Rishika Dhanawade
+PRN: 079
+Date:8.6.21
+Sub:OOPS
+Language:JAVA
+#########################
+
+
+
+//1) create a multi-threaded application by using  "extends Thread " method.create 2 threads. 
+//they should display characters from A to J.
+
+public class MultiThread_1 extends Thread {
+	
+	public void run()
+	{
+		System.out.println(Thread.currentThread());
+		for(char ch='A';ch<='J';ch++)
+		{
+			System.out.println(ch);
+		}
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub\
+		System.out.println(Thread.currentThread());
+		MultiThread_1 t1=new MultiThread_1();
+		t1.setName("First");
+		t1.start();
+		MultiThread_1 t2=new MultiThread_1();
+		t2.setName("Second");
+		t2.start();
+		
+
+	}
+
+}
+
+O/P:
+Thread[main,5,main]
+Thread[First,5,main]
+Thread[Second,5,main]
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+
+//1) create a multi-threaded application by using  "extends Thread " method.create 2 threads. 
+//they should display characters from A to J. above program  using "implements Runnable" method.
+
+public class MultiThread_2 implements Runnable{
+
+	public void run()
+	{
+		for(char ch='A';ch<='J';ch++)
+		{
+			System.out.println(ch);
+		}
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+		MultiThread_2 ob=new MultiThread_2();
+		Thread t1=new Thread(ob);
+		Thread t2=new Thread(ob);
+		t1.start();
+		t2.start();
+	}
+
+}
+
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J
+A
+B
+C
+D
+E
+F
+G
+H
+I
+J

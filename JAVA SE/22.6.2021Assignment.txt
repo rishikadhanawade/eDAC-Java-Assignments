@@ -1,0 +1,281 @@
+//3) write a Servlet to read init parameter [ coder = Sachin ] and context parameter [ group=evolutioners ]
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class Day3AssServ extends HttpServlet
+{
+	public void doGet(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+			response.setContentType("text/html");		
+			PrintWriter pw=response.getWriter();
+			String value=getServletConfig().getInitParameter("coder");
+			pw.println(value);
+			String value1=getServletContext().getInitParameter("group");
+			pw.println("<br>"+value1);
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+
+
+
+3]
+
+<html>
+<body>
+    <form action="http://localhost:8080/trialapp/MainServ" method="post">
+    <input type="checkbox" name="mymodule" value="Java">Java<br>
+    <input type="checkbox" name="mymodule" value="C++">C++<br>
+    <input type="checkbox" name="mymodule" value="Oracle">Oracle<br>
+    <input type="checkbox" name="mymodule" value="Dotnet">Dotnet<br>
+    <input type="submit">
+    </form>
+</body>
+</html>
+
+MAINSERV
+____________________________________________
+import java.util.*; 
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class MainServ extends HttpServlet
+{
+	public void doPost(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+		HttpSession session=request.getSession();
+		String arr[]=request.getParameterValues("modules");
+		List<String> mylist=new ArrayList<String>();
+		for(int i=0;i<arr.length;i++)
+		{
+			mylist.add(arr[i]);
+		}
+		session.setAttribute("module",mylist);
+
+		PrintWriter pw=response.getWriter();
+		pw.println("session created");
+
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+
+DISPSERV
+_____________________________________
+import java.util.*;
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class DispServ extends HttpServlet
+{
+	public void doGet(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+		PrintWriter pw=response.getWriter();
+		HttpSession session=request.getSession(false);
+		if(session!=null)
+		{	
+			List<String> l1 = (ArrayList<String>)session.getAttribute("module");
+			pw.println(l1);
+		}
+
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+
+
+
+1]
+
+<html>
+    <body>
+        <form action="http://localhost:8080/trialapp/MainServ1" method="post">
+        <input type="radio" name="myradio" value="Java">Java<br>
+        <input type="radio" name="myradio" value="C++">C++<br>
+        <input type="radio" name="myradio" value="Oracle">Oracle<br>
+        <input type="submit">
+        </form>
+    </body>
+    </html>
+MAINSERV1
+____________________________________________
+import java.util.*; 
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+public class MainServ1 extends HttpServlet
+{
+	public void doPost(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+		String str=request.getParameter("myradio");
+		if(str.equalsIgnoreCase("Java"))
+		{
+			response.sendRedirect("JavaServ");
+		}
+		else if(str.equalsIgnoreCase("C++"))
+		{
+			response.sendRedirect("CppServ");
+		}
+		else
+		{
+			response.sendRedirect("OracleServ");
+		}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+
+JAVASERV
+_______________________________
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class JavaServ extends HttpServlet
+{
+	public void doGet(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+			
+			PrintWriter pw=response.getWriter();
+			pw.println("I am Java");
+				}
+		catch(Exception ee)
+		{
+			System.out.println("in forwarding"+ee);
+		}
+	}
+}
+
+CPPSERV
+_______________________________
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class CppServ extends HttpServlet
+{
+	public void doGet(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+			
+			PrintWriter pw=response.getWriter();
+			pw.println("I am Cplusplus");
+				}
+		catch(Exception ee)
+		{
+			System.out.println("in forwarding"+ee);
+		}
+	}
+}
+
+
+ORACLESERV
+___________________________________________
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class OracleServ extends HttpServlet
+{
+	public void doGet(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{
+			
+			PrintWriter pw=response.getWriter();
+			pw.println("I am Oracle");
+				}
+		catch(Exception ee)
+		{
+			System.out.println("in forwarding"+ee);
+		}
+	}
+}
+
+
+
+2]
+
+<html>
+    <body>
+        <form action="http://localhost:8080/trialapp/MainServ2">
+            <select id="modules" name="modules">
+              <option value="Java">Java</option>
+              <option value="C++">C++</option>
+              <option value="Oracle">Oracle</option>
+            </select>
+            <input type="submit">
+        </form>
+    </body>
+</html>
+
+
+
+MAINSERV.JAVA
+_______________________________________________________
+
+
+import javax.servlet.*;
+import javax.servlet.http.*;
+import java.io.*;
+public class MainServ2 extends HttpServlet
+{
+	public void doGet(HttpServletRequest request,HttpServletResponse response)
+	{
+		try
+		{	
+			RequestDispatcher rd=null;
+			String str=request.getParameter("modules");
+			if(str.equalsIgnoreCase("Java"))
+			{
+				rd=request.getRequestDispatcher("JavaServ");
+			}
+			else if(str.equalsIgnoreCase("C++"))
+			{
+				rd=request.getRequestDispatcher("CppServ");
+			}
+			else
+			{
+				rd=request.getRequestDispatcher("OracleServ");
+			}
+			rd.forward(request,response);
+		}
+		catch(Exception ee)
+		{
+			System.out.println("in forwarding"+ee);
+		}
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+

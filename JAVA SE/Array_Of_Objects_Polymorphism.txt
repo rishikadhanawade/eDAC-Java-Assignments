@@ -1,0 +1,192 @@
+#########################
+Rishika Dhanawade
+29.05.21 Assignment 4
+JAVA
+OOPS
+##########################
+
+
+//1) initialize a single dimension array and sort it in ascending order.
+public class Array1 {
+
+	public static void main(String[] args) {
+		
+		int i,temp;
+		int A[]={33,3,4,5,6,78};
+		 for (i = 0; i < A.length-1; i++) 
+		  {
+			  System.out.print(A[i]+" ");
+		  }
+		 System.out.println();
+		  for (i = 0; i < A.length-1; i++) // For number of pass
+		    {
+		        for (int j = 0; j <A.length-1-i ; j++) // For comparison in each pass
+		        {
+		            if(A[j]>A[j+1])
+		            {
+		                temp = A[j];
+		                A[j] = A[j+1];
+		                A[j+1] = temp; 
+		            }
+		        }  
+		    } 
+		  System.out.println("Sorted Array is");
+		  for (i = 0; i < A.length-1; i++) 
+		  {
+			  System.out.print(A[i]+" ");
+		  }
+	}
+
+}
+
+
+O/P:
+33 3 4 5 6 
+Sorted Array is
+3 4 5 6 33 
+
+//2) create a class "DemoArr",with the function "disp". create 4 objects of this class in an array.
+//Traverse the array and invoke "disp" on each objects.
+
+class Demo
+{
+	void disp()
+	{
+		System.out.println("This is Display function");
+	}
+}
+public class Array2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Demo d1[]=new Demo [4];
+		
+		for(int i=0;i<d1.length;i++)
+		{
+			d1[i]=new Demo(); // object creation
+		}
+		for(int i=0;i<d1.length;i++)
+		{
+			d1[i].disp();
+		}
+	}
+
+}
+
+
+O/P:
+This is Display function
+This is Display function
+This is Display function
+This is Display function
+
+//3)	Define a class “Check” in which declare member variables using  different accessibility modifiers i.e.  <default>, private ,
+//public and protected.   Define a function “disp”  which should be public.  Define a class “CheckDemo” in which you
+//will write “main()” function. Create an instance of  the class “Check” and  show how many  variables can be accessed directly 
+//and how many indirectly.
+//
+
+class Check
+{
+	private int a;
+	public int getA() {
+		return a;
+	}
+	public void setA(int a) {
+		this.a = a;
+	}
+	public int b;
+	protected int c;
+	int d;
+	public void disp()
+	{
+		System.out.println("This is public");
+	}
+}
+public class CheckDemo {
+
+	public static void main(String[] args) {
+			Check c1=new Check();
+			c1.setA(5);  //accessed through getter
+			System.out.println("a="+c1.getA()); //accessed through setter
+			c1.b=3; //accessed directly
+			System.out.println("b="+c1.b);
+			c1.c=5; //accessed directly
+			System.out.println("c="+c1.c);
+			c1.d=10; //accessed directly
+			System.out.println("d="+c1.d);
+			c1.disp();
+			
+	}
+
+}
+
+O/P:
+a=5
+b=3
+c=5
+d=10
+This is public
+
+
+4] Single level Inheritance example
+class Person {
+   public Person() {
+      System.out.println("Inside person");
+   }
+}
+class Doctor extends Person {
+   public Doctor() {
+      System.out.println("Inside doctor");
+   }
+}
+public class SingleLevelInherit {
+
+	public static void main(String[] args) {
+		Doctor d1=new Doctor();
+
+	}
+
+}
+
+O/P:
+Inside person
+Inside doctor
+
+
+5] Multilevel Inheritance
+class Parent
+{
+	public Parent()
+	{
+		System.out.println("Inside parent");
+	}
+}
+class Child1 extends Parent
+{
+	public Child1()
+	{
+		System.out.println("Inside Child1");
+	}
+}
+class Child2 extends Child1
+{
+	public Child2()
+	{
+		System.out.println("Inside Child2");
+	}
+}
+
+public class MultiLevelInherit {
+
+	public static void main(String[] args) {
+		Child2 c2=new Child2();
+
+	}
+
+}
+
+O/P:
+Inside parent
+Inside Child1
+Inside Child2

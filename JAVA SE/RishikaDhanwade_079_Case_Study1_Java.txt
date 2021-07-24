@@ -1,0 +1,91 @@
+#########################
+Author:Rishika Dhanawade
+Date of creation: 29.05.2021
+Topic:Object Oriented Programming With JAVA Case Study 1
+Language Used: JAVA
+#########################
+
+
+Employee.java
+
+/**
+ * 
+ */
+package emppack;
+
+/**
+ * @author Rishika Dhanawade
+ *
+ */
+public class Employee {
+	
+	private String name;
+	private String desig;
+	private double salary;
+	/**
+	 * @return the name that was passed to the setter
+	 */
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param name set the name for initialization of instance member
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+	/**
+	 * @return the desig that was passed to the setter
+	 */
+	public String getDesig() {
+		return desig;
+	}
+	/**
+	 * @param desig set the desig for initialization of instance member
+	 */
+	public void setDesig(String desig) {
+		this.desig = desig;
+	}
+	public double getSalary() {
+		return salary;
+	}
+	public void setSalary(double salary) {
+		this.salary = salary;
+	}
+	public Employee(String name, String desig, double salary) {
+		super();
+		this.name = name;
+		this.desig = desig;
+		this.salary = salary;
+	}
+	public Employee() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+}
+
+
+Client
+
+import emppack.Employee;
+
+public class MyApp1 {
+
+	public static void main(String[] args) {
+		Employee e1=new Employee();
+		e1.setName("Rishika");
+		System.out.println("Name of Employee "+e1.getName());
+		e1.setDesig("Doctor");
+		System.out.println("Designantion: "+e1.getDesig());
+		e1.setSalary(25000);
+		System.out.println("Salary is "+e1.getSalary());
+
+	}
+
+}
+
+o/p:
+Name of Employee Rishika
+Designantion: Doctor
+Salary is 25000.0

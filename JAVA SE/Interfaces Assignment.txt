@@ -1,0 +1,193 @@
+####################################
+Author:Rishika Dhanawade
+PRN:079
+Subject:OOPS
+Lang:Java
+Date:1.06.2021
+####################################
+1]Define an interface “Vechicle” with “start()” function . Now derive  classes like “T etc. from “Vehicle” and override “start()” function. 
+Define a class “VDemo” in which  write  main()  function. In the main function create a reference to Vehicle  class referring to any of the sub class. Using this reference, call “start"
+method.
+
+interface Vehicle
+{
+   void start();
+}
+class TwoWheeler implements Vehicle
+{
+	public void start()
+	{
+		System.out.println("TwoWheeler started");
+	}
+}
+class ThreeWheeler implements Vehicle
+{
+	public void start()
+	{
+		System.out.println("ThreeWheeler started");
+	}
+}
+class FourWheeler implements Vehicle
+{
+	public void start()
+	{
+		System.out.println("FourWheeler started");
+	}
+}
+public class Vehicle_Int {
+
+	public static void main(String[] args) {
+		Vehicle ref=new ThreeWheeler();
+		ref.start();
+
+	}
+
+}
+
+O/P:
+ThreeWheeler started
+
+2]Define interface "A" with "disp1()" method.
+Derive from "A", interface "B" with "disp2" method.
+Derive class "C" , from "B".
+Instantiate class "C" and call its members as well as derived from parent interfaces.
+
+interface A1
+{
+	void disp1();
+	
+}
+interface B1 extends A1
+{
+	void disp2();
+}
+class C1 implements B1
+{
+	public void disp1()
+	{
+		System.out.println("Interface A1");
+	}
+	public void disp2()
+	{
+		System.out.println("Interface B1");
+	}
+	public void disp3()
+	{
+		System.out.println("Class C1");
+	}
+	
+}
+public class ABC_Int {
+
+	public static void main(String[] args) {
+		C1 c1=new C1();
+		c1.disp1();
+		c1.disp2();
+		c1.disp3();
+
+	}
+
+}
+O/P:
+Interface A1
+Interface B1
+Class C1
+
+3]Define class "Parent1" with some data.
+Define interface "Parent2" with some data.
+Derive a class "Child" from "Parent1" and "Parent2", instantiate it and call the members.
+
+interface Parent12
+{
+	void disp1();
+}
+interface Parent2
+{
+	void disp2();
+}
+class Childx implements Parent12,Parent2
+{
+	public void disp1() 
+	{
+		System.out.println("Parent1 Interface");
+	}
+	public void disp2()
+	{
+		System.out.println("Parent2 Interface");
+	}
+	public void disp3()
+	{
+		System.out.println("Class Childx");
+	}
+}
+public class Parent_int {
+
+	public static void main(String[] args) {
+		
+		Childx cx=new Childx();
+		cx.disp1();
+		cx.disp2();
+		cx.disp3();
+
+	}
+
+}
+O/P:
+Parent1 Interface
+Parent2 Interface
+Class Childx
+
+4]Create interface "Game" , have an abstract method "play()". from this interface implements classes like "Cricket" , "FootBall" and "Tennis".
+Now Define one more class 
+public class Demo with main function.
+In this class have a static method "perform" which will take interface reference as parameter.inside "perform()" see to it\
+that any child object passed ,its "play()" method should be invoked. Call "perform()" method from main function.
+
+
+interface Game
+{
+	void play();
+}
+class Cricket implements Game
+{
+	public void play()
+	{
+		System.out.println("Play Cricket");
+	}
+}
+class Football implements Game
+{
+	public void play()
+	{
+		System.out.println("Play Football");
+	}
+}
+class Tennis implements Game
+{
+	public void play()
+	{
+		System.out.println("Play Tennis");
+	}
+}
+public class DemoGame {
+		
+		static void perform(Game ref)
+		{
+			ref.play();
+		}
+	public static void main(String[] args) {
+		
+		perform(new Cricket());
+		perform(new Tennis());
+
+	}
+
+}
+
+O/P:
+Play Cricket
+Play Tennis
+
+
+
+

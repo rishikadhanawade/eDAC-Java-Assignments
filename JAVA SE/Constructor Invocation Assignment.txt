@@ -1,0 +1,167 @@
+1]Define 2 classes “First” and “Second” with member variables , member functions and constructors of  your choice. Now define a class “Two” in which define main function . 
+In main function create various instances of First and Second  and call  their individual member functions.
+ 	
+class First
+{
+	int a;
+	public void setA(int a)
+	{
+		this.a=a;
+	}
+	public int getA()
+	{
+		return a;
+	}
+	public First(int a)
+	{
+		this.a=a;
+		System.out.println("This is a Parameterised constructor");
+	}
+	
+}
+class Second
+{
+	private int c;
+	public void setC(int c)
+	{
+		this.c=c;
+	}
+	public int getC()
+	{
+		return c;
+	}
+	public Second(int c)
+	{
+		this.c=c;
+		System.out.println("This is a Parameterised constructor");
+	}
+}
+public class Two {
+
+	public static void main(String[] args) {
+		
+		First f1=new First(5);
+		System.out.println(f1.getA());
+		f1.setA(10);
+		System.out.println(f1.getA());
+		Second s1=new Second(10);
+		System.out.println(s1.getC());
+		s1.setC(15);
+		System.out.println(s1.getC());
+	}
+
+}
+
+O/P: 
+This is a Parameterised constructor
+5
+10
+This is a Parameterised constructor
+10
+15
+
+
+2]Create a class with static and non-static member variables. Define static and non-static member functions. Create instance of this class and call both static
+ and non-static member functions
+
+class ABC
+{
+	private int a;
+	static int b=12; 
+	public int getA() {
+		return a;
+	}
+
+	public void setA(int a) {
+		this.a = a;
+	}
+	
+	public static int getB() {
+		return b;
+	}
+}
+public class MoreAssignments2 {
+
+	public static void main(String[] args) {
+		ABC obj1=new ABC();
+		obj1.setA(15); //setting value of non static member
+		System.out.println(obj1.getA()); //calling non static member
+		System.out.println(ABC.getB()); //calling static member 
+
+	}
+
+}
+
+O/P: 15
+     12
+
+3] Define static initializers in the above A,B and C classes and check the order of their execution.
+
+class A
+	{
+		static
+		{
+			System.out.println("Static Block of A");
+		}
+		int a=85;
+		static int b=10;
+	}
+class B
+	{
+	static
+	{
+		System.out.println("Static Block of B");
+	}
+		int c=96;
+		static int d=20;
+	}
+class C
+	{
+	static
+	{
+		System.out.println("Static Block of C");
+	}
+		int e=32;
+		static int f=30;
+	}
+public class Ass3_6
+	{
+	static
+	{
+		System.out.println("Before main");
+	}
+		public static void main(String[] args)
+			{
+				A s1=new A();
+				System.out.println(s1.a+" "+A.b);
+				B s2=new B();
+				System.out.println(s2.c+" "+B.d);
+				System.out.println("In main");
+				C s3=new C();
+				System.out.println(s3.e+" "+C.f);
+			}
+		static
+		{
+			System.out.println("After main");
+		}
+		static
+		{
+			System.out.println("After main 2");
+		}
+	}
+
+
+
+O/P:
+
+Before main
+After main
+After main 2
+Static Block of A
+85 10
+Static Block of B
+96 20
+In main
+Static Block of C
+32 30
+

@@ -1,0 +1,200 @@
+import java.io.*;
+import java.util.Scanner;
+
+//1)accept 10 characters from a user ( use Scanner).
+//store these 10 characters in a file. (FileWriter)
+//Now open a file and read all these characters.
+
+public class Question1 {
+
+	public static void main(String[] args) {
+		
+		char array1[]=null;
+		char array[]=new char[10];
+		Scanner sc=new Scanner(System.in);
+		try(FileWriter fw=new FileWriter("D:\\filehandling\\Assign1.txt"))
+		{
+			for(int i=0;i<10;i++)
+			{
+				array[i]=sc.next().charAt(0);
+			}
+			fw.write(array);
+		}
+		catch(IOException ie)
+		{
+			ie.printStackTrace();
+		}
+		try(FileReader fr=new FileReader("D:\\filehandling\\Assign1.txt"))
+		{
+			array1=new char[(int)new File("D:\\filehandling\\Assign1.txt").length()];
+			fr.read(array1);
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+		for(int i=0;i<array1.length;i++)
+		{
+			System.out.println(array1[i]);
+		}
+
+	}
+
+}
+
+
+//2) using RandomAccessFile class create a file.
+//accept a message from user and write in a file.
+//now read the message which u have stored in a file.
+//now again accept a message and write in a file at the end of existing message.
+//now read the entire content of file . ( u should be able to read both the messages now)
+
+
+import java.io.*;
+//Program to write and read in a file using RandomAccessFile 
+
+//class
+public class Question2
+{
+	public static void main(String args[])
+	{
+		try(RandomAccessFile rf=new RandomAccessFile("D:\\filehandling\\Assign2.txt","rw"))
+			{
+			rf.seek(rf.length()); //to set the pointer as per needed
+			System.out.println("Enter data");
+			byte b[]=new byte[200];
+			int k=System.in.read(b);
+			rf.write(b,0,k);
+			rf.seek(0);
+			byte c[]=new byte[(int)rf.length()];
+			rf.read(c);
+			String ss=new String(c);
+			System.out.println(ss);
+			rf.seek(rf.length());
+			System.out.println("Enter data again");
+			k=System.in.read(b);
+			rf.write(b,0,k);
+			System.out.println("Finally reading all data");
+			rf.seek(0);
+			c=new byte[(int)rf.length()];
+			rf.read(c);
+			ss=new String(c);
+			System.out.println(ss);
+			}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+
+import java.io.*;
+
+public class Question3 {
+
+	public static void main(String[] args) 
+	{
+		File f=new File("D:\\filehandling\\Assign3_a.txt");
+		if(!f.exists())
+		{
+			System.out.println("file does not exists");
+			System.exit(0);
+		}
+		try(FileInputStream fis=new FileInputStream(f))
+		{
+			byte b[]=new byte[((int)f.length())];
+			fis.read(b); //writing file contents to b
+			try(FileOutputStream fos=new FileOutputStream("D:\\filehandling\\Assign3_b.txt",true))
+			{
+				int k=(int)f.length();
+				fos.write(b,0,k); //writing contents of b to second file
+			}
+			catch(Exception ee)
+			{
+				ee.printStackTrace();
+			}
+		}
+	catch(Exception ee)
+	{
+		ee.printStackTrace();
+	}
+
+	}
+
+}
+
+
+import java.io.*;
+public class Assignment4 
+{
+	public static void main(String args[])
+	{
+		char array1[]=null;
+		try(FileReader fr=new FileReader("D:\\filehandling\\Assign4_a.txt"))
+		{
+			array1=new char[(int)new File("D:\\filehandling\\Assign4_a.txt").length()];
+			fr.read(array1);
+			try(FileWriter fw=new FileWriter("D:\\filehandling\\Assign4_b.txt"))
+			{
+				fw.write(array1);
+			}
+			catch(IOException ie)
+			{
+				ie.printStackTrace();
+			}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+
+	}
+}
+
+
+ //accept as many as numbers from user till he presses "0"  and write these numbers in a file. Now Open a file 
+//and read these numbers. ( Hint :- use Scanner class for input, FileOutputStream, DataOutputStream, 
+//FileInputStream , DataInputStream)
+import java.util.*;
+import java.io.*;
+public class Question5
+{
+	public static void main(String args[])
+	{
+		try(FileOutputStream fos=new FileOutputStream("D:\\filehandling\\Assign5.txt"))
+		{
+			try(DataOutputStream dos=new DataOutputStream(fos))
+			{
+				Scanner sc=new Scanner(System.in);
+				while(true)
+				{
+					int a=sc.nextInt();
+					if(a==0)
+					{
+						break;
+					}
+					dos.writeInt(a);
+				}
+			}
+		}
+		catch(IOException ie)
+		{
+			ie.printStackTrace();
+		}
+		try(FileInputStream fis=new FileInputStream("D:\\filehandling\\Assign5.txt"))
+		{
+			try(DataInputStream dis=new DataInputStream(fis))
+			{
+				while(dis.available()!=0)
+				{
+					System.out.println(dis.readInt());
+				}
+			}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+

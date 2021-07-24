@@ -1,0 +1,479 @@
+####################################
+Author:Rishika Dhanawade
+PRN:079
+Subject:OOPS
+Lang:Java
+Date:31.05.2021
+####################################
+
+1] Show the example of hierarchical inheritance with constructor invocation.
+class Ajoba
+{
+	public Ajoba() {
+		System.out.println("In Class First");
+	}
+}
+class Baba extends Ajoba
+{
+	public Baba()
+	{
+		System.out.println("In Class Second");
+	}
+}
+class Natu extends Ajoba
+{
+	public Natu()
+	{
+		System.out.println("In Class Third");
+	}
+}
+public class HierarInher {
+
+	public static void main(String[] args) 
+	{
+	
+		Natu t3=new Natu();
+		Baba t2=new Baba();
+	
+	}
+
+}
+
+O/P:
+In Class First
+In Class Third
+In Class First
+In Class Second
+
+2] Define a parent and a child class . Now explain function overriding with Example.
+
+class Parent1
+{
+	void print()
+	{
+		System.out.println("I am Parent");
+	}
+}
+class Baccha extends Parent1
+{
+	void print()
+	{
+		System.out.println("I am Child");
+	}
+}
+public class Func_Over_7 {
+
+	public static void main(String[] args) {
+	Baccha c1=new Baccha();
+	Parent1 ref=new Baccha();
+	c1.print();
+//	ref.print();
+
+	}
+
+}
+
+O/P:
+I am Child
+
+3]Define a parent class with one function. Define child class with the function having same name as of parent class function, but having different argument.
+Create an instance of child class and call the functions. Make sure u have followed the concept of “function overloading “ in inheritance
+
+class Baap
+{	
+	static int num=1;
+	void disp()
+	{
+		System.out.println(num);
+	}
+}
+class Beta extends Baap
+{
+	void disp(int a,int b)
+	{
+		System.out.println(a+b);
+	}
+}
+public class Func_OverL_8 {
+
+	public static void main(String[] args) {
+		Beta b=new Beta();
+		b.disp();
+		b.disp(2,3);
+
+	}
+
+}
+
+O/P:
+1
+5
+
+4] 1)	Define a class “Shape” with “draw()” function . Now derive  classes like “Circle”, “Polygon”,”Rectangle” etc. from “Shape” and override “draw()” function. 
+Define a class “ShapeDemo” in which  write  main()  function. In the main function create a reference to Shape class referring to any of the sub class. Using this reference, 
+call “draw()” and check the result.
+
+class Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Shape");
+	}
+}
+class Circle extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Circle");
+	}
+}
+class Polygon extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Polygon");
+	}
+}
+class Rectangle extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Rectangle");
+	}
+}
+
+public class Shape_9 {
+
+	public static void main(String[] args) {
+		
+		Shape ref=new Circle();
+		ref.draw();
+		ref=new Polygon();
+		ref.draw();
+		ref=new Rectangle();
+		ref.draw();
+	}
+
+}
+
+O/P:
+Draw Circle
+Draw Polygon
+Draw Rectangle
+
+4) Create a class "Top1" with "disp1()" method.
+From this class Derive "Bottom1", "Bottom2" and "Bottom3" classes ,override the "disp1()".
+Now show how will u achieve dynamic polymorphism.
+
+class Top1
+{
+	void disp()
+	{
+		System.out.println("This is Top1");
+	}
+}
+class Bottom1 extends Top1
+{
+	void disp()
+	{
+		System.out.println("This is Bottom 1");
+	}
+}
+class Bottom2 extends Top1
+{
+	void disp()
+	{
+		System.out.println("This is Bottom 2");
+	}
+}
+class Bottom3 extends Top1
+{
+	void disp()
+	{
+		System.out.println("This is Bottom 3");
+	}
+}
+public class TopBottom {
+	
+	static void perform(Top1 ref)
+	{
+		ref.disp();
+	}
+
+	public static void main(String[] args) 
+	{
+		perform(new Bottom1());
+		perform(new Bottom2());
+		perform(new Bottom3());
+	}
+
+}
+
+O/P:
+This is Bottom 1
+This is Bottom 2
+This is Bottom 3
+
+
+8) Define a class "base1" with only parameterized constructor.
+Derive a class "sub1" from "base1". This class should have following constructors
+	a) Default
+	b) one parameter
+	c) two parameter
+Now try to instantiate "sub1" , using any of the above mentioned constructors.
+
+
+class Base1
+{	int num;
+	public Base1(int num)
+	{
+		this.num=num;
+		System.out.println("Num1:"+num);
+	}
+}
+class Sub1 extends Base1
+{
+	int num1;
+	int num2;
+	public Sub1(int num1) 
+	{
+		super(30);
+		this.num1=num1;
+		System.out.println("Num1: "+num1+" Num2: "+num2);
+	
+	}
+	public Sub1(int num1,int num2)
+	{
+		super(40);
+		this.num2=num2;
+		this.num1=num1;
+		System.out.println("Num1: "+num1+" Num2: "+num2);
+	}
+	public Sub1()
+	{
+		super(10);
+		System.out.println("Num1: "+num1+" Num2: "+num2);
+	}
+}
+public class Base_8 {
+
+	public static void main(String[] args) {
+		Sub1 s1=new Sub1(10,20);
+
+	}
+
+}
+
+
+O/P:
+Num1:40
+Num1: 10 Num2: 20
+
+9) Create abstract class Shape. declare "draw()" function as abstract. From this class define "Triangle","Polygon" and "Circle" .
+create an array of Shape having 3 elements.
+store child objects into this array . and call
+their draw function.
+
+abstract class Shape
+{
+	abstract void draw();
+}
+class Triangle extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw a triangle");
+	}
+}
+class Circle extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Circle");
+	}
+}
+class Polygon extends Shape
+{
+	void draw()
+	{
+		System.out.println("Draw Polygon");
+	}
+}
+public class Abstract_9 {
+
+	public static void main(String[] args) {
+		Shape shp[]=new Shape[3];
+		shp[0]=new Triangle();
+		shp[0].draw();
+		shp[1]=new Circle();
+		shp[1].draw();
+		shp[2]=new Polygon();
+		shp[2].draw();
+		
+
+	}
+
+}
+O/P:
+Draw a triangle
+Draw Circle
+Draw Polygon
+
+10] Create a hierarchy
+Course
+void start()
+void end()
+override "start()" and "end()" in all the child classes.
+
+MsCit		Basic		Dbda
+				void orientation()
+write a class "CourseDemo" with main and perform functionsperform function should be defined in such a way that it can accept any course and
+invoke "start()" and "end()" functions. also make sure if "Dbda" is passed , its "orientation()" method also should be called.
+class Course
+{
+	void start()
+	{
+	}
+	void end()
+	{
+		
+	}
+}
+class DBDA extends Course
+{
+	void start()
+	{
+		System.out.println("DBDA Started");
+	}
+	void end()
+	{
+		System.out.println("DBDA Ended");
+	}
+	void orientation()
+	{
+		System.out.println("Orientaion done");
+	}
+}
+class Mscit extends Course
+{
+	void start()
+	{
+		System.out.println("MSCIT Started");
+	}
+	void end()
+	{
+		System.out.println("MSCIT Ended");
+	}
+}
+class Basic extends Course
+{
+	void start()
+	{
+		System.out.println("Basic Started");
+	}
+	void end()
+	{
+		System.out.println("Basic Ended");
+	}
+}
+public class InstOf_1 
+{
+	static void perform(Course ref)
+	{
+		ref.start();
+		ref.end();
+
+		if(ref instanceof DBDA)   // if ref contains or refers to Dac_Dbda
+		{
+			DBDA ob=(DBDA)ref;  // downcasting
+			ob.orientation();
+		}
+
+	}
+	public static void main(String args[])
+	{
+		perform(new DBDA());
+		perform(new Mscit());
+		perform(new Basic());
+	}
+}
+	
+
+O/P:
+DBDA Started
+DBDA Ended
+Orientaion done
+MSCIT Started
+MSCIT Ended
+Basic Started
+Basic Ended
+
+11]Create a hierarchy
+Animal
+void makeSound()
+override "makeSound()" in all the child classes.
+Dog		Cat		Tiger
+				void hunting()
+Write a class "AnimalDemo" with main and perform functions perform function should be defined in such a way that it can accept any 
+animal and invoke "makeSound()" function. also make sure if "Tiger" is passed , its "hunting()" method also should be called.
+
+class Animal
+{
+	void makesound()
+	{
+		
+	}
+}
+class Dog extends Animal
+{
+	void makesound()
+	{
+		System.out.println("Dog Barks");
+	}
+}
+class Cat extends Animal
+{
+	void makesound()
+	{
+		System.out.println("Cat Meows");
+	}
+}
+class Tiger extends Animal
+{
+	void makesound()
+	{
+		System.out.println("Tiger roars");
+	}
+	void hunting()
+	{
+		System.out.println("Tiger is hunted");
+	}
+}
+public class InstOf_2 {
+	
+	 static void perform(Animal ref)
+	{
+		ref.makesound();
+		if(ref instanceof Tiger)
+		{
+			Tiger tg=(Tiger)ref;
+			tg.hunting();
+		}
+	}
+
+	public static void main(String[] args) {
+		perform(new Tiger());
+		perform(new Dog());
+		perform(new Cat());
+	}
+
+}
+
+
+O/P:
+Tiger roars
+Tiger is hunted
+Dog Barks
+Cat Meows
+
+

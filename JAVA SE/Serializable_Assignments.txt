@@ -1,0 +1,239 @@
+//1)create a customer class with following attributes
+//	custid
+//	custname
+//	address
+//	age
+//create one instance of it and store it in a file. (Serialization).
+//now open a file, read the object and read its contents . (Deserialization)
+
+import java.io.*;
+class Customer implements Serializable
+{
+	
+	private static final long serialVersionUID = 1L;
+	int custid;
+	String custname;
+	String address;
+	int age;
+}
+public class Question1
+{
+	public static void main(String args[])
+	{
+			Customer c1=new Customer();
+			c1.custid=100;
+			c1.custname="Rishika";
+			c1.address="Mumbai";
+			c1.age=23;
+			System.out.println(c1.custid+" "+c1.custname+" "+c1.address+" "+c1.age);
+			try(FileOutputStream fos=new FileOutputStream("D:\\filehandling\\Serialize1"))
+			{
+			try(ObjectOutputStream oos=new ObjectOutputStream(fos))
+			{
+			oos.writeObject(c1);
+			}
+			}
+			catch(Exception ee)
+			{
+				ee.printStackTrace();
+			}
+
+			try(FileInputStream fis=new FileInputStream("D:\\filehandling\\Serialize1"))
+			{
+			try(ObjectInputStream ois=new ObjectInputStream(fis))
+			{
+			Customer temp=(Customer)ois.readObject();
+			System.out.println(temp.custid+" "+temp.custname+" "+temp.address+" "+temp.age);
+			}
+			}
+			catch(Exception ee)
+			{
+				ee.printStackTrace();
+			}
+	}
+}
+
+
+//2)Person class implements Serializable with
+//private String name
+//private int age
+//getters and setters
+//parameterized constructor
+//Student extends Person
+//private int rollno
+//getter and setters
+//parameterized constructor accepting name,age and rollno
+//pass name and age to the super constructor
+//Demo class with main
+//create one object of Student, write it inside file and then read.
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+class Person implements Serializable
+{
+	
+	public Person(String name, int age) {
+		this.name = name;
+		this.age = age;
+	}
+	private static final long serialVersionUID = 1L;
+	private String name;
+	private int age;
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getAge() {
+		return age;
+	}
+	public void setAge(int age) {
+		this.age = age;
+	}
+}
+class Student extends Person
+{
+	private static final long serialVersionUID = 1L;
+	private int rollno;
+
+	public Student(String name, int age,int rollno) {
+		super(name, age);
+		this.rollno=rollno;
+	}
+
+	public int getRollno() {
+		return rollno;
+	}
+	
+}
+public class Question2 {
+
+	public static void main(String[] args) {
+		
+		Student s1=new Student("Rishika",23,79);
+		System.out.println(s1.getName()+" "+s1.getAge()+" "+s1.getRollno());
+		try(FileOutputStream fos=new FileOutputStream("D:\\filehandling\\Serialize2.txt"))
+		{
+		try(ObjectOutputStream oos=new ObjectOutputStream(fos))
+		{
+		oos.writeObject(s1);
+		}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+		try(FileInputStream fis=new FileInputStream("D:\\filehandling\\Serialize2.txt"))
+		{
+		try(ObjectInputStream ois=new ObjectInputStream(fis))
+		{
+		Student temp=(Student)ois.readObject();
+		System.out.println(temp.getName()+" "+temp.getAge()+" "+temp.getRollno());
+		}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+	}
+}
+
+
+
+
+
+//3) Define a class "Car" with private int id and private String modelname; setters and getters
+//create 2 objects of Car and write them inside filesystem and thereafter read both the objects and display.
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+class Car implements Serializable
+{
+	private static final long serialVersionUID = 1L;
+	private int id;
+	private String modelname;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
+	public String getModelname() {
+		return modelname;
+	}
+	public void setModelname(String modelname) {
+		this.modelname = modelname;
+	}
+	public Car(int id, String modelname) {
+		this.id = id;
+		this.modelname = modelname;
+	}
+}
+public class Question3 {
+
+	public static void main(String[] args) {
+		
+		Car c1=new Car(100,"Honda75");
+		Car c2=new Car(101,"Honda76");
+		System.out.println(c1.getId()+" "+c1.getModelname());
+		System.out.println(c2.getId()+" "+c2.getModelname());
+		//Writing object1 onto File
+		try(FileOutputStream fos=new FileOutputStream("D:\\filehandling\\Serialize3_a.txt"))
+		{
+		try(ObjectOutputStream oos=new ObjectOutputStream(fos))
+		{
+		oos.writeObject(c1);
+		}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+		//Writing object2 onto File
+		try(FileOutputStream fos=new FileOutputStream("D:\\filehandling\\Serialize3_b.txt"))
+		{
+		try(ObjectOutputStream oos=new ObjectOutputStream(fos))
+		{
+		oos.writeObject(c2);
+		}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+		//Reading object1 from File
+		try(FileInputStream fis=new FileInputStream("D:\\filehandling\\Serialize3_a.txt"))
+		{
+		try(ObjectInputStream ois=new ObjectInputStream(fis))
+		{
+		Car temp=(Car)ois.readObject();
+		System.out.println(temp.getId()+" "+temp.getModelname());
+		}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+		//Reading object1 from File
+		try(FileInputStream fis=new FileInputStream("D:\\filehandling\\Serialize3_b.txt"))
+		{
+		try(ObjectInputStream ois=new ObjectInputStream(fis))
+		{
+		Car temp=(Car)ois.readObject();
+		System.out.println(temp.getId()+" "+temp.getModelname());
+		}
+		}
+		catch(Exception ee)
+		{
+			ee.printStackTrace();
+		}
+		
+
+	}
+
+}
